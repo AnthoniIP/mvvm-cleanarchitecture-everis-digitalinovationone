@@ -1,4 +1,4 @@
-package com.ipsoft.view
+package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.view
 
 import Movie
 import android.view.LayoutInflater

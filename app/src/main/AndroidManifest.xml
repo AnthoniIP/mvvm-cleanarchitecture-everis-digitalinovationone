@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mvvmcleanarchitectureeverisdigitalinovationone">
-        <activity android:name="com.ipsoft.view.MainActivity">
+        <activity android:name="com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
