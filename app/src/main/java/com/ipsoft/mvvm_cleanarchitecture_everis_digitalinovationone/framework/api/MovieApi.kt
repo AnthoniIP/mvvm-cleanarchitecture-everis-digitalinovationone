@@ -1,4 +1,4 @@
-package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.api
+package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.framework.api
 
 import Movie
 import retrofit2.Call

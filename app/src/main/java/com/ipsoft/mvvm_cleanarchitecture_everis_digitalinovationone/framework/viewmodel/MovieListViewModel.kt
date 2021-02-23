@@ -1,12 +1,14 @@
-package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.viewmodel
+package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.framework.viewmodel
 
 import Movie
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.api.MovieRestApiTask
-import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.repository.MovieRepository
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.framework.api.MovieRestApiTask
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.data.MovieRepository
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.implementations.MovieDataSourceImplementation
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.usecase.MoviesListUseCase
 
 /**
  *
@@ -18,7 +20,9 @@ import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.repository.M
 class MovieListViewModel : ViewModel() {
 
     private val movieRestApiTask = MovieRestApiTask()
-    private val movieRepository = MovieRepository(movieRestApiTask)
+    private val movieDataSource = MovieDataSourceImplementation(movieRestApiTask)
+    private val movieRepository = MovieRepository(movieDataSource)
+    private val movieListUseCase = MoviesListUseCase(movieRepository)
 
     private var _movieList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>>
@@ -31,7 +35,7 @@ class MovieListViewModel : ViewModel() {
     private fun getAllMovies() {
         Thread {
             try {
-                _movieList.postValue(movieRepository.getAllMovies())
+                _movieList.postValue(movieListUseCase.invoke())
             } catch (exception: Exception) {
                 Log.d(TAG, exception.toString())
             }

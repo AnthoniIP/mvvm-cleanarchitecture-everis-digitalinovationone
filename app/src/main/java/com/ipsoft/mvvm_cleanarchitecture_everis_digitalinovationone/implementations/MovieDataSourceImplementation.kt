@@ -1,8 +1,10 @@
-package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.repository
+package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.implementations
 
 import Movie
 import android.util.Log
-import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.api.MovieRestApiTask
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.framework.api.MovieRestApiTask
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.data.MovieDataSource
+
 
 /**
  *
@@ -11,11 +13,12 @@ import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.api.MovieRes
  *  Date:       23/02/2021
  */
 
-class MovieRepository(private val movieRestApiTask: MovieRestApiTask) {
+class MovieDataSourceImplementation(private val movieRestApiTask: MovieRestApiTask) :
+    MovieDataSource {
 
     private val movieList = arrayListOf<Movie>()
-    fun getAllMovies(): List<Movie> {
 
+    override fun getAllMovies(): List<Movie> {
         val request = movieRestApiTask.retrofitApi().getAllMovies().execute()
         if (request.isSuccessful) {
             request.body()?.let {

@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.databinding.ActivityMainBinding
-import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.viewmodel.MovieListViewModel
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.framework.viewmodel.MovieListViewModel
 
 class MainActivity : AppCompatActivity() {
 
