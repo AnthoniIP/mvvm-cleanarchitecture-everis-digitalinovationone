@@ -2,6 +2,7 @@ package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.view
 
 import Movie
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.databinding.ActivityMainBinding
@@ -22,11 +23,18 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory().create(MovieListViewModel::class.java)
         movieListViewModel.init()
         initObservers()
+        loadingVisibility(true)
     }
 
     private fun initObservers() {
         movieListViewModel.movieList.observe(this, { listMovies ->
-            populateList(listMovies)
+            if (listMovies.isNotEmpty()) {
+                populateList(listMovies)
+                loadingVisibility(false)
+            } else {
+                loadingVisibility(true)
+            }
+
         })
     }
 
@@ -35,5 +43,10 @@ class MainActivity : AppCompatActivity() {
             hasFixedSize()
             adapter = MoviesAdapter(listMovies)
         }
+    }
+
+    private fun loadingVisibility(isLoading: Boolean) {
+
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

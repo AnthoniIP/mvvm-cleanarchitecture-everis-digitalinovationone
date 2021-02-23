@@ -1,9 +1,12 @@
 package com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.viewmodel
 
 import Movie
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.api.MovieRestApiTask
+import com.ipsoft.mvvm_cleanarchitecture_everis_digitalinovationone.repository.MovieRepository
 
 /**
  *
@@ -13,22 +16,10 @@ import androidx.lifecycle.ViewModel
  */
 
 class MovieListViewModel : ViewModel() {
-    private val listOfMovies = arrayListOf(
-        Movie(
-            id = 0,
-            titulo = "titanic",
-            descricao = null,
-            imagem = null,
-            dataLancamento = null
-        ),
-        Movie(
-            id = 1,
-            titulo = "central do brasil",
-            descricao = null,
-            imagem = null,
-            dataLancamento = null
-        )
-    )
+
+    private val movieRestApiTask = MovieRestApiTask()
+    private val movieRepository = MovieRepository(movieRestApiTask)
+
     private var _movieList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>>
         get() = _movieList
@@ -38,6 +29,16 @@ class MovieListViewModel : ViewModel() {
     }
 
     private fun getAllMovies() {
-        _movieList.value = listOfMovies
+        Thread {
+            try {
+                _movieList.postValue(movieRepository.getAllMovies())
+            } catch (exception: Exception) {
+                Log.d(TAG, exception.toString())
+            }
+        }.start()
+    }
+
+    companion object {
+        const val TAG = "MovieListViewModel"
     }
 }
